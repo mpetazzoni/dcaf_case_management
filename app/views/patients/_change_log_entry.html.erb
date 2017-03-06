@@ -1,9 +1,16 @@
 <% if revision.changed_fields.present? %>
   <tr>
-    <td><%= revision.date_of_change %></td>
-    <td><%= safe_join_fields(revision.changed_fields) %></td>
-    <td><%= safe_join_fields(revision.changed_from) %></td>
-    <td><%= safe_join_fields(revision.changed_to) %></td>
-    <td><%= revision.changed_by_user %></td>
+    <td rowspan="<%= revision.changed_fields.size %>">
+      <%= revision.date_of_change %>
+    </td>
+    <td rowspan="<%= revision.changed_fields.size %>">
+      <%= revision.changed_by_user %>
+    </td>
+    <% revision.changed_fields.each do |field| %>
+    <td><%= field.humanize %></td>
+    <td><%= revision.original[field] %></td>
+    <td><%= revision.modified[field] %></td>
   </tr>
+  <tr>
+    <% end %>
 <% end %>

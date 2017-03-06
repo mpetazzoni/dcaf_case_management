@@ -4,34 +4,23 @@ class AuditTrail
   include Mongoid::Userstamp
   mongoid_userstamp user_model: 'User'
 
-  IRRELEVANT_FIELDS = %w(user_ids updated_by).freeze
+  IRRELEVANT_FIELDS = %w(user_ids updated_by_id identifier).freeze
+
+  @changed = nil
 
   # convenience methods for clean view display
   def date_of_change
-    created_at.display_date
+    created_at.display_timestamp
   end
 
   def changed_fields
-    relevant_fields = modified.map do |key, _value|
-      key unless IRRELEVANT_FIELDS.include? key
-    end
-
-    relevant_fields.compact.map(&:humanize)
-  end
-
-  # TODO: properly render null values like in special circumstances
-  # Something like this should work:
-  # "HAHA I WIN" if (fields.all?{|f| f.blank? || (f.flatten.all? &:blank? if f.respond_to?('each'))})
-  def changed_from
-    original.map do |key, value|
-      value unless IRRELEVANT_FIELDS.include? key
-    end
-  end
-
-  def changed_to
-    modified.map do |key, value|
-      value unless IRRELEVANT_FIELDS.include? key
-    end
+    @changed ||= modified.select do |key, value|
+      if IRRELEVANT_FIELDS.include?(key) || (!original.keys.include?(key) && value == '')
+        false
+      else
+        original[key] != value
+      end
+    end.keys
   end
 
   def changed_by_user

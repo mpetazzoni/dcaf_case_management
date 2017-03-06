@@ -218,12 +218,12 @@ GEM
       mongo (~> 2.1)
       origin (~> 2.1)
       tzinfo (>= 0.3.37)
-    mongoid-compatibility (0.4.0)
+    mongoid-compatibility (0.4.1)
       activesupport
       mongoid (>= 2.0)
     mongoid-enum (0.4.0)
       mongoid (~> 5.0)
-    mongoid-history (0.5.0)
+    mongoid-history (0.6.1)
       activesupport
       easy_diff
       mongoid (>= 3.0)
@@ -455,7 +455,7 @@ DEPENDENCIES
   mongo_session_store-rails4
   mongoid (~> 5.0.0)
   mongoid-enum
-  mongoid-history (~> 0.5.0)
+  mongoid-history (~> 0.6.1)
   mongoid_userstamp
   newrelic_rpm
   nokogiri (>= 1.6.8)

@@ -2,9 +2,9 @@
 class Pregnancy
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::History::Trackable
-  include Mongoid::Userstamp
   include LastMenstrualPeriodHelper
+  include Mongoid::Userstamp
+  mongoid_userstamp user_model: 'User'
 
   # Relationships
   embedded_in :patient
@@ -35,14 +35,6 @@ class Pregnancy
   validates :created_by_id,
             presence: true
   validate :pledge_sent, :pledge_info_presence, if: :updating_pledge_sent?
-
-  # History and auditing
-  track_history on: fields.keys + [:updated_by_id],
-                version_field: :version,
-                track_create: true,
-                track_update: true,
-                track_destroy: true
-  mongoid_userstamp user_model: 'User'
 
   # Methods - see also the helpers
 

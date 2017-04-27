@@ -4,6 +4,7 @@ class Patient
   include Mongoid::Timestamps
   include Mongoid::Enum
   include Mongoid::History::Trackable
+  include Mongoid::RelationsDirtyTracking
   include Mongoid::Userstamp
   include StatusHelper
 
@@ -92,7 +93,7 @@ class Patient
   # some validation of only one active pregnancy at a time
 
   # History and auditing
-  track_history on: fields.keys + [:updated_by_id],
+  track_history on: [:fields, :updated_by_id, :embedded_relations],
                 version_field: :version,
                 track_create: true,
                 track_update: true,
@@ -199,8 +200,7 @@ class Patient
   end
 
   def assemble_audit_trails
-    (history_tracks | pregnancy.history_tracks).sort_by(&:created_at)
-                                               .reverse
+    history_tracks.sort_by(&:created_at).reverse
   end
 
   # Search-related stuff

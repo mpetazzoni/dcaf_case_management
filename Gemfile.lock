@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/bopm/mongoid_relations_dirty_tracking
+  revision: b1bc994f4a145c940e05bab3021bbd55010545f5
+  ref: b1bc994f4a145c940e05bab3021bbd55010545f5
+  specs:
+    mongoid_relations_dirty_tracking (0.1.0)
+      mongoid (>= 3.1.0)
+
+GIT
   remote: https://github.com/jalada/platform-api
   revision: 45ddb3c1a7e2c7f85d979c0791db18e99affb237
   branch: master
@@ -456,6 +464,7 @@ DEPENDENCIES
   mongoid (~> 5.0.0)
   mongoid-enum
   mongoid-history (~> 0.6.1)
+  mongoid_relations_dirty_tracking!
   mongoid_userstamp
   newrelic_rpm
   nokogiri (>= 1.6.8)
